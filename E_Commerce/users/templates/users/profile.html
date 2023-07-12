@@ -1,0 +1,60 @@
+{% extends 'commerce_app/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm mx-auto" style="background-color: #3498db; width: 40em;">
+      <div class="lh-1 text-center w-100">
+        <h1 class="h6 mb-0 lh-1" style="font-size: xx-large;">{{user.username}}'s Profile</h1>
+        <small style="font-size: medium;">{{user.email}}</small>
+      </div>
+    </div>
+    <h2 class="text-center" style="padding-top: 0.3em;">Recent Orders</h2>
+    {% for order in orders|dictsortreversed:"date_ordered" %}
+      <ol class="list-group" style="padding-bottom: 1em;">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold" style="padding-bottom: 0.3em;">
+              {{ order.date_ordered|date:"M d, Y - H:i" }}
+              <br>
+              {{ order.first_name }} {{ order.last_name }}
+              <br>
+              {{ order.phone_number }}
+              <br>
+              {{ order.address }}, {{ order.zip_code }} ,{{ order.state }}, {{ order.country }}
+            </div>
+            <br>
+            {% for order_item in order_items %}
+              {% if order_item.order == order %}
+                {{ order_item }}
+                <br>
+              {% endif %}
+            {% endfor %}
+            <div class="fw-bold" style="padding-bottom: 0.3em;">Total: ${{ order.total_price }}</div>
+          </div>
+        </li>
+      </ol>
+    {% endfor %}
+
+<style>
+    .btn.btn-outline-dark:hover {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+
+    h1 {
+        font-family: "Verdana";
+        font-size: 64px;
+        color: #333;
+        text-align: center;
+        margin-top: 0.5em;
+    }
+
+    .border{
+        margin-bottom: 2em;
+    }
+</style>
+
+{% endblock content %}

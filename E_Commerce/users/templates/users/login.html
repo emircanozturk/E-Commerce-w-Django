@@ -1,0 +1,43 @@
+{% extends 'commerce_app/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h1>Welcome Back</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="padding-top: 1.5em;padding-right: 20em;padding-left: 20em;font-size: large;">
+        <fieldset class="form-group">
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-dark" type="submit" style="margin-top: 1em; width: 6em;">Sign In</button>
+        </div>
+        </div>
+    </form>
+    <div class="border" style="margin-left: 20em;margin-right: 20em;text-align: center; font-size: large;">
+        <small class="text-muted">Do You Need An Account? <a class="link-primary" style="font-weight: bold;" href="{% url 'register' %}">Sign Up</a>
+        </small>
+    </div>
+</div>
+<style>
+    .btn.btn-outline-dark:hover {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+
+    h1 {
+        font-family: "Verdana";
+        font-size: 64px;
+        color: #333;
+        text-align: center;
+        margin-top: 0.5em;
+    }
+
+    .border{
+        margin-bottom: 2em;
+    }
+</style>
+
+{% endblock content %}

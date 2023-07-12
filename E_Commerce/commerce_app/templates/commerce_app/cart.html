@@ -1,0 +1,91 @@
+{% extends 'commerce_app/base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .date-column {
+        width: 9%;
+    }
+
+    .item-column {
+        width: 40%;
+    }
+
+    .quantity-column {
+        width: 7%;
+    }
+
+    .price-column {
+        width: 6%;
+    }
+
+    .total-column {
+        width: 8%;
+    }
+
+</style>
+
+<table class="table table-bordered table-striped container" style="margin-top: 2em;">
+    <thead>
+        <tr>
+            <th scope="col" class="date-column">Date</th>
+            <th scope="col" class="item-column">Item</th>
+            <th scope="col" class="quantity-column">Quantity</th>
+            <th scope="col" class="price-column">Price</th>
+            <th scope="col" class="total-column">Total</th>
+        </tr>
+    </thead>
+    {% if cart_items %}
+    <tbody class="table-group-divider">
+        {% for cart_item in cart_items|dictsortreversed:"date_added" %}
+        <tr>
+            <th scope="row">{{ cart_item.date_added|date:"M d, Y" }}</th>
+            <td>
+                <img src="{{ cart_item.item.photo.url }}" style="width: 54px; height: 54px; object-fit: contain; margin-right: 1em;">
+                {{ cart_item.item }}
+            </td>
+            <td>
+                <a href="{% url 'decrease-quantity' item_id=cart_item.pk %}" class="link-danger link-offset-2 link-underline-opacity-0" style="font-size: large;">-</a>
+                {{ cart_item.quantity }}
+                <a href="{% url 'increase-quantity' item_id=cart_item.pk %}" class="link-danger link-offset-2 link-underline-opacity-0" style="font-size: large;">+</a>
+                <a href="{% url 'remove-item' item_id=cart_item.pk %}" class="link-danger link-offset-2 link-underline-opacity-0" style="padding-left: 0.5em;">
+                    <i class="bi bi-x-circle"></i>
+                </a>
+            </td>
+            <td>${{ cart_item.item.price }}</td>
+            <td>${{ cart_item.total_price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% else %}
+    <tbody class="table-group-divider">
+        <tr>
+            <td colspan="4" style="font-size: large; font-weight: bold;">Your cart is empty.</td>
+        </tr>
+    {% endif %}
+</table>
+
+<main class="container">
+    <div class="d-flex p-3 my-3 text-white rounded mx-auto" style="background-color: #3498db; width: fit-content;">
+        <div class="lh-1">
+            <h1 class="h6 mb-0 text-white lh-1">Total Price <strong>${{total_price}}</strong></h1>
+        </div>
+    </div>
+    {% if cart_items %}
+    <div class="text-center">
+        <a href="{% url 'commerce_app-checkout' %}">
+            <button type="button" class="btn btn-outline-dark">Proceed To Checkout</button>
+        </a>
+    </div>
+    {% endif %}
+</main>
+
+
+<style>
+  .btn.btn-outline-dark:hover {
+    background-color: #3498db;
+    border-color: #3498db;
+  }
+</style>
+
+{% endblock content %}

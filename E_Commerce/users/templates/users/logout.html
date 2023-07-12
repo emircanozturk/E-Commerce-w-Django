@@ -1,0 +1,40 @@
+{% extends 'commerce_app/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<script>
+    setTimeout(function(){
+         window.location.href = "{% url 'commerce_app-home' %}";
+      }, 5000);
+</script>
+
+<div class="container">
+    <h1>You Have Been Logged Out</h1>
+    <div style="margin-left: 20em;margin-right: 20em;text-align: center; font-size: large;">
+        <small class="text-muted"><a class="link-primary" style="font-weight: bold;" href="{% url 'login' %}">Log in</a> again or go to
+        <a class="link-primary" style="font-weight: bold;" href="{% url 'commerce_app-home' %}">Store</a>
+        <br><br>You will be redirected to Store in 5 seconds
+        </small>
+    </div>
+</div>
+<style>
+    .btn.btn-outline-dark:hover {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+
+    h1 {
+        font-family: "Verdana";
+        font-size: 64px;
+        color: #333;
+        text-align: center;
+        margin-top: 0.5em;
+    }
+
+    .border{
+        margin-bottom: 2em;
+    }
+</style>
+
+{% endblock content %}

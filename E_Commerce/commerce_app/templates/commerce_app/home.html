@@ -1,0 +1,87 @@
+{% extends 'commerce_app/base.html' %}
+{% load static %}
+{% block content %}
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<section style="background-color: #eee;">
+  
+    <div class="text-center container py-5">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} mx-auto" style="max-width: 500px;">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      <nav class="navbar navbar-expand-lg" style="margin: 1em;">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mx-auto">
+              <a class="nav-link nav-item" href="{% url 'commerce_app-home' %}">All</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Technological Device' %}">Technological Device</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Wearable' %}">Wearable</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Accessory' %}">Accessory</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Furniture' %}">Furniture</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Entertainment' %}">Entertainment</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Stationery' %}">Stationery</a>
+              <a class="nav-link nav-item" href="{% url 'commerce_app-filterbycategory' 'Outdoor' %}">Outdoor</a>
+          </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="row">
+
+        {% for stuff in stuffs %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                    data-mdb-ripple-color="light">
+                    <img src="{{ stuff.photo.url }}" style="height: 300; object-fit: contain; padding-top: 1em;"
+                    class="w-100" />
+                    <a href="#!">
+                    <div class="mask">
+                        <div class="d-flex justify-content-start align-items-end h-100"></div>
+                    </div>
+                    <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <a href="" class="nav-item nav-link link-body-emphasis" data-toggle="tooltip" title="{{ stuff.name}}">
+                        <h5 class="card-title mb-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; line-height: 1.2; padding-bottom: 0.3em;">{{ stuff.name }}</h5>
+                    </a>
+                    <a href="" class="nav-item nav-link link-body-emphasis" style="font-size: small;">
+                        <p>{{ stuff.category }}</p>
+                    </a>
+                    <h6 class="mb-3" style="font-size: large;">${{ stuff.price }}</h6>
+                    <a href="{% url 'add_to_cart' item_id=stuff.pk %}">
+                      <button type="button" class="btn btn-outline-dark">Add To Card</button>
+                    </a>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <style>
+    .btn.btn-outline-dark:hover {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+
+    .btn.btn-outline-danger{
+      border-color: black;
+      margin-top: 0.5em;
+    }
+  </style>
+{% endblock content %}

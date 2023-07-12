@@ -1,0 +1,30 @@
+.nav-link{
+    color: white;
+    font-size: large;
+}
+
+.nav-item{
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.navbar-brand{
+    color: white;
+    font-size: x-large;
+}
+
+.navbar.navbar-expand-lg{
+    background-color: #3498db;
+}
+
+.navbar-toggler{
+    background-color: white;
+}
+
+.btn.btn-outline-primary{
+    color: black;
+}
+
+.date-column {
+    width: 5%;
+}
